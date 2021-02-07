@@ -21,7 +21,6 @@ public class MealController {
 
     @GetMapping("/meals")
     public List<Meal> getAllMeals() {
-        mealService.addMeal(new Meal("1", "Kurczak", MealType.DINNER, 350));
         return mealService.getAllMeals();
     }
 }

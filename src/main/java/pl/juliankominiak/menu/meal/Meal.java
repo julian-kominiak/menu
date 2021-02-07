@@ -1,24 +1,29 @@
 package pl.juliankominiak.menu.meal;
 
-import pl.juliankominiak.menu.Recipe;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import pl.juliankominiak.menu.meal.recipe.MealRecipe;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
 
 @Entity
 public class Meal {
     @Id
-    private String id;
+    @GeneratedValue
+    private long id;
     private String name;
     private MealType mealType;
     private int kcal;
 
     @OneToOne
-    private Recipe recipe;
+    @Cascade(CascadeType.ALL)
+    private MealRecipe recipe;
 
-    public Meal(String id, String name, MealType mealType, int kcal) {
-        this.id = id;
+    public Meal(String name, MealType mealType, int kcal) {
         this.name = name;
         this.mealType = mealType;
         this.kcal = kcal;
@@ -26,6 +31,14 @@ public class Meal {
 
     public Meal() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -44,11 +57,11 @@ public class Meal {
         this.mealType = mealType;
     }
 
-    public Recipe getRecipe() {
+    public MealRecipe getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(Recipe recipe) {
+    public void setRecipe(MealRecipe recipe) {
         this.recipe = recipe;
     }
 

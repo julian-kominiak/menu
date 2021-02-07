@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 @Service
 public class MealService {
@@ -12,19 +12,28 @@ public class MealService {
     @Autowired
     private MealRepository mealRepository;
 
-    public List<Meal> getAllMeals() {
-        return new ArrayList(mealRepository.findAll());
+    public ArrayList<Meal> getAllMeals() {
+        return new ArrayList<>(mealRepository.findAll());
     }
 
     public void addMeal(Meal meal) {
-        mealRepository.save(meal);
+        if (mealRepository.findByName(meal.getName()).isPresent()) {
+            updateMeal(meal);
+        } else {
+            mealRepository.save(meal);
+        }
     }
 
     public void updateMeal(Meal meal) {
-        mealRepository.save(meal);
+        Meal mealToUpdate = mealRepository.findByName(meal.getName()).get();
+        mealToUpdate.setName(meal.getName());
+        mealToUpdate.setKcal(meal.getKcal());
+        mealToUpdate.setMealType(meal.getMealType());
+        mealToUpdate.setRecipe(meal.getRecipe());
+        mealRepository.save(mealToUpdate);
     }
 
-    public void deleteMeal(String id) {
+    public void deleteMeal(long id) {
         mealRepository.deleteById(id);
     }
 }
