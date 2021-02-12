@@ -2,7 +2,7 @@ package pl.juliankominiak.menu.meal;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import pl.juliankominiak.menu.meal.recipe.MealRecipe;
+import pl.juliankominiak.menu.meal.recipe.Recipe;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ public class Meal {
 
     @OneToOne
     @Cascade(CascadeType.ALL)
-    private MealRecipe recipe;
+    private Recipe recipe;
 
     public Meal(String name, MealType mealType, int kcal) {
         this.name = name;
@@ -57,11 +57,11 @@ public class Meal {
         this.mealType = mealType;
     }
 
-    public MealRecipe getRecipe() {
+    public Recipe getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(MealRecipe recipe) {
+    public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
 

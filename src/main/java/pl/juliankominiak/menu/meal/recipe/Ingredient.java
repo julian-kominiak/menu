@@ -8,10 +8,15 @@ import javax.persistence.Id;
 public class Ingredient {
     @Id
     @GeneratedValue
-    long id;
-    String name;
-    int quantity;
-    String unit;
+    private long id;
+    private String name;
+    private int quantity;
+    private String unit;
+
+    public Ingredient(String name) {
+        this.name = name;
+        this.quantity = 0;
+    }
 
     public Ingredient(String name, int quantity) {
         this.name = name;

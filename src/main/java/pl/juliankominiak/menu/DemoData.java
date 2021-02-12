@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 import pl.juliankominiak.menu.meal.Meal;
 import pl.juliankominiak.menu.meal.MealRepository;
 import pl.juliankominiak.menu.meal.MealType;
-import pl.juliankominiak.menu.meal.recipe.Ingredient;
-import pl.juliankominiak.menu.meal.recipe.MealRecipe;
+import pl.juliankominiak.menu.meal.recipe.Recipe;
 
 @Component
 public class DemoData {
@@ -19,10 +18,12 @@ public class DemoData {
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
         Meal meal = new Meal("Kurczak śmietanowy", MealType.DINNER, 450);
-        MealRecipe mealRecipe = new MealRecipe();
-        mealRecipe.addIngredient(new Ingredient("Kurczak", 300));
-        mealRecipe.addIngredient(new Ingredient("Śmietana", 100, "ml"));
-        meal.setRecipe(mealRecipe);
+        Recipe recipe = new Recipe();
+        recipe.addIngredient("Kurczak", 300);
+        recipe.addIngredient("Kurczak", 300);
+        recipe.addIngredient("Śmietana", 100, "ml");
+        recipe.removeIngredient("Śmietana");
+        meal.setRecipe(recipe);
         mealRepository.save(meal);
 
         mealRepository.save(new Meal("Naleśniki", MealType.DINNER, 45034));
