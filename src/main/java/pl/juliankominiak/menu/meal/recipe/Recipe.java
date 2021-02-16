@@ -22,21 +22,24 @@ public class Recipe {
         this.ingredients = new ArrayList<>();
     }
 
-    public void addIngredient(String name, int quantity) {
+    public void addIngredient(String name, double quantity) {
         addIngredient(name, quantity, "g");
     }
 
-    public void addIngredient(String name, int quantity, String unit) {
+    public void addIngredient(String name, double quantity, String unit) {
         if (ingredients.stream()
                 .anyMatch(i -> i.getName().equals(name))) {
             addIngredientQuantity(name, quantity);
-        } else {
+        } else if (quantity > 0 && !name.isEmpty()) {
+            if (unit.isEmpty()) {
+                unit = "g";
+            }
             Ingredient ingredient = new Ingredient(name, quantity, unit);
             ingredients.add(ingredient);
         }
     }
 
-    private void addIngredientQuantity(String name, int quantity) {
+    private void addIngredientQuantity(String name, double quantity) {
         ingredients.stream()
                 .filter(i -> i.getName().equals(name))
                 .forEach(i -> i.setQuantity(i.getQuantity() + quantity));
@@ -53,21 +56,23 @@ public class Recipe {
         }
     }
 
-    private void removeIngredient(String name, int quantity) {
+    public void removeIngredient(String name, double quantity) {
+        if (quantity <= 0) {
+            return;
+        }
         ingredients.stream()
                 .filter(i -> i.getName().equals(name))
                 .forEach(i -> i.setQuantity(i.getQuantity() - quantity));
         if (ingredients.stream()
                 .anyMatch(i -> i.getQuantity() <= 0)) {
-            Ingredient ingredientToRemove = ingredients.stream()
-                    .filter(i -> i.getQuantity() <= 0)
-                    .findAny()
-                    .get();
-            ingredients.remove(ingredientToRemove);
+            removeIngredient(name);
         }
     }
 
     public void updateIngredientName(String name, String newName) {
+        if (newName.isEmpty()) {
+            return;
+        }
         ingredients.stream()
                 .filter(i -> i.getName().equals(name))
                 .forEach(i -> i.setName(newName));
@@ -81,6 +86,18 @@ public class Recipe {
 
     public List<Ingredient> getIngredients() {
         return ingredients;
+    }
+
+    public Ingredient getIngredient(String name) {
+        Ingredient ingredient;
+        if (ingredients.stream()
+                .anyMatch(i -> i.getName().equals(name))) {
+            ingredient = ingredients.stream()
+                    .filter(i -> i.getName().equals(name))
+                    .findAny().get();
+            return ingredient;
+        }
+        return null;
     }
 
     public void setId(long id) {

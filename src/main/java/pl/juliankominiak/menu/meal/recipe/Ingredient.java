@@ -1,5 +1,7 @@
 package pl.juliankominiak.menu.meal.recipe;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,8 +11,9 @@ public class Ingredient {
     @Id
     @GeneratedValue
     private long id;
+    @NotNull
     private String name;
-    private int quantity;
+    private double quantity;
     private String unit;
 
     public Ingredient(String name) {
@@ -18,13 +21,13 @@ public class Ingredient {
         this.quantity = 0;
     }
 
-    public Ingredient(String name, int quantity) {
+    public Ingredient(String name, double quantity) {
         this.name = name;
         this.quantity = quantity;
         this.unit = "g";
     }
 
-    public Ingredient(String name, int quantity, String unit) {
+    public Ingredient(String name, double quantity, String unit) {
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
@@ -48,11 +51,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

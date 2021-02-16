@@ -25,7 +25,6 @@ public class DemoData {
         recipe.removeIngredient("Śmietana");
         meal.setRecipe(recipe);
         mealRepository.save(meal);
-
         mealRepository.save(new Meal("Naleśniki", MealType.DINNER, 45034));
     }
 
